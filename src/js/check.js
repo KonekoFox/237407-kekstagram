@@ -1,6 +1,4 @@
 "use strict";
-var a;
-var b;
 
 function getMessage(a, b) {
     var aType = typeof a;
@@ -13,7 +11,7 @@ function getMessage(a, b) {
         return "Переданное GIF-изображение не анимировано";
     } else if (aType == "number") {
         return "Переданное SVG-изображение содержит " + a + " объектов и " + b * 4 + " атрибутов";
-    } else if (aType == "object" && bType != "object") {
+    } else if (Array.isArray(a) && !Array.isArray(b)) {
         var index;
         var amountOfRedPoints = 0;
         
@@ -21,7 +19,7 @@ function getMessage(a, b) {
             amountOfRedPoints = amountOfRedPoints + a[index];
         }
         return "Количество красных точек во всех строчках изображения: " + amountOfRedPoints;
-    } else if (aType == "object" && bType == "object") {
+    } else if (Array.isArray(a) && Array.isArray(b)) {
         var artifactsSquare = 0;
         
         for (index = 0; index < a.length; index++) {
@@ -34,4 +32,4 @@ function getMessage(a, b) {
     }
     
     return "Переданы некорректные данные";    
-}    
+} 
