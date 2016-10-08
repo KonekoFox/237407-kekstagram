@@ -129,11 +129,9 @@
                  this._resizeConstraint.side / 2 - this._ctx.lineWidth / 2);
       this._ctx.closePath();
       this._ctx.fill('evenodd');
-        
-
+      
       // Отрисовка прямоугольника, обозначающего область изображения после
       // кадрирования. Координаты задаются от центра.
-        
       this._ctx.strokeRect(
           (-this._resizeConstraint.side / 2) - this._ctx.lineWidth / 2,
           (-this._resizeConstraint.side / 2) - this._ctx.lineWidth / 2,
@@ -146,7 +144,7 @@
       var text = this._image.naturalWidth + ' x ' + this._image.naturalHeight;
       var textWidth = this._ctx.measureText(text);
       
-      this._ctx.fillStyle = "#ffffff";
+      this._ctx.fillStyle = '#ffffff';
       this._ctx.fillText(text,
                         -textWidth.width / 2,
                         -this._resizeConstraint.side / 2 - this._ctx.lineWidth * 2.5);
