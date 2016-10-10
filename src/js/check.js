@@ -11,14 +11,14 @@
   } else if (aType === 'number') {
     return 'Переданное SVG-изображение содержит ' + a + ' объектов и ' + b * 4 + ' атрибутов';
   } else if (Array.isArray(a) && !Array.isArray(b)) {
-      var index;
-      var amountOfRedPoints = 0;
+    var index;
+    var amountOfRedPoints = 0;
 
-      for (index = 0; index < a.length; index++) {
+    for (index = 0; index < a.length; index++) {
         amountOfRedPoints = amountOfRedPoints + a[index];
       }
-      return 'Количество красных точек во всех строчках изображения: ' + amountOfRedPoints;
-    } else if (Array.isArray(a) && Array.isArray(b)) {
+    return 'Количество красных точек во всех строчках изображения: ' + amountOfRedPoints;
+  } else if (Array.isArray(a) && Array.isArray(b)) {
       var artifactsSquare = 0;
 
       for (index = 0; index < a.length; index++) {
