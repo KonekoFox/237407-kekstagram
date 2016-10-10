@@ -15,20 +15,20 @@
     var amountOfRedPoints = 0;
 
     for (index = 0; index < a.length; index++) {
-        amountOfRedPoints = amountOfRedPoints + a[index];
-      }
+      amountOfRedPoints = amountOfRedPoints + a[index];
+    }
     return 'Количество красных точек во всех строчках изображения: ' + amountOfRedPoints;
   } else if (Array.isArray(a) && Array.isArray(b)) {
-      var artifactsSquare = 0;
+    var artifactsSquare = 0;
 
-      for (index = 0; index < a.length; index++) {
-        a[index] = a[index] * b[index];
-      }
-      for (index = 0; index < a.length; index++) {
-        artifactsSquare = artifactsSquare + a[index];
-      }
-      return 'Общая площадь артефактов сжатия: ' + artifactsSquare + ' пикселей';
+    for (index = 0; index < a.length; index++) {
+      a[index] = a[index] * b[index];
     }
+    for (index = 0; index < a.length; index++) {
+      artifactsSquare = artifactsSquare + a[index];
+    }
+    return 'Общая площадь артефактов сжатия: ' + artifactsSquare + ' пикселей';
+  }
 
   return 'Переданы некорректные данные';
 })();
