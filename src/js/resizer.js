@@ -111,6 +111,25 @@
       // Координаты задаются от центра холста.
       this._ctx.drawImage(this._image, displX, displY);
 
+      // Оверлей
+      this._ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+      this._ctx.beginPath();
+      this._ctx.moveTo(-this._container.width / 2, -this._container.height / 2);
+      this._ctx.lineTo(this._container.width / 2, -this._container.height / 2);
+      this._ctx.lineTo(this._container.width / 2, this._container.height / 2);
+      this._ctx.lineTo(-this._container.width / 2, this._container.height / 2);
+
+      this._ctx.moveTo(-this._resizeConstraint.side / 2 - this._ctx.lineWidth,
+                 -this._resizeConstraint.side / 2 - this._ctx.lineWidth);
+      this._ctx.lineTo(this._resizeConstraint.side / 2 - this._ctx.lineWidth / 2,
+                 -this._resizeConstraint.side / 2 - this._ctx.lineWidth);
+      this._ctx.lineTo(this._resizeConstraint.side / 2 - this._ctx.lineWidth / 2,
+                 this._resizeConstraint.side / 2 - this._ctx.lineWidth / 2);
+      this._ctx.lineTo(-this._resizeConstraint.side / 2 - this._ctx.lineWidth,
+                 this._resizeConstraint.side / 2 - this._ctx.lineWidth / 2);
+      this._ctx.closePath();
+      this._ctx.fill('evenodd');
+
       // Отрисовка прямоугольника, обозначающего область изображения после
       // кадрирования. Координаты задаются от центра.
       this._ctx.strokeRect(
@@ -118,6 +137,17 @@
           (-this._resizeConstraint.side / 2) - this._ctx.lineWidth / 2,
           this._resizeConstraint.side - this._ctx.lineWidth / 2,
           this._resizeConstraint.side - this._ctx.lineWidth / 2);
+
+      // Вывод размеров изображения
+      this._ctx.font = '14px Arial, sans-serif';
+
+      var text = this._image.naturalWidth + ' x ' + this._image.naturalHeight;
+      var textWidth = this._ctx.measureText(text);
+
+      this._ctx.fillStyle = '#ffffff';
+      this._ctx.fillText(text,
+                        -textWidth.width / 2,
+                        -this._resizeConstraint.side / 2 - this._ctx.lineWidth * 2.5);
 
       // Восстановление состояния канваса, которое было до вызова ctx.save
       // и последующего изменения системы координат. Нужно для того, чтобы
@@ -135,7 +165,7 @@
      * @param {number} x
      * @param {number} y
      * @private
-     */
+*/
     _enterDragMode: function(x, y) {
       this._cursorPosition = new Coordinate(x, y);
       document.body.addEventListener('mousemove', this._onDrag);
