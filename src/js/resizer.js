@@ -91,12 +91,7 @@
       // Толщина линии.
       this._ctx.lineWidth = 6;
       // Цвет обводки.
-      this._ctx.strokeStyle = '#ffe753';
-      // Размер штрихов. Первый элемент массива задает длину штриха, второй
-      // расстояние между соседними штрихами.
-      this._ctx.setLineDash([15, 10]);
-      // Смещение первого штриха от начала линии.
-      this._ctx.lineDashOffset = 7;
+      this._ctx.strokeStyle = 'transparent';
 
       // Сохранение состояния канваса.
       this._ctx.save();
@@ -129,6 +124,52 @@
                  this._resizeConstraint.side / 2 - this._ctx.lineWidth / 2);
       this._ctx.closePath();
       this._ctx.fill('evenodd');
+
+
+      // Рамка из точек
+      var radius = 3;
+      var constCoordinate = -this._resizeConstraint.side / 2 - this._ctx.lineWidth / 2;
+      var varCoordinate = constCoordinate;
+      var endAngle = Math.PI * 2;
+
+      // Следующие 4 переменные используются для рассчета шажка центра точки
+      // dotCenterStep, в идеале он должен равняться радиусу.
+      var frameWidth = this._resizeConstraint.side - this._ctx.lineWidth / 2;
+      var spaceForDots = frameWidth / 3 * 2;
+      var dotsNumber = Math.floor(spaceForDots / (radius * 2));
+      var dotMargin = (Math.floor(frameWidth / 3) + (frameWidth % 3)) / dotsNumber;
+
+      var dotCenterStep = radius * 2 + dotMargin;
+
+      for(varCoordinate;
+          varCoordinate <= this._resizeConstraint.side / 2 - this._ctx.lineWidth / 2;
+          varCoordinate += dotCenterStep) {
+
+        // Горизонтальный ряд точек от верхнего левого угла
+        this._ctx.fillStyle = '#ffe753';
+        this._ctx.beginPath();
+        this._ctx.arc(varCoordinate, constCoordinate, radius, 0, endAngle, true);
+        this._ctx.fill();
+        this._ctx.closePath();
+
+        // Горизонтальный ряд точек от нижнего левого угла
+        this._ctx.beginPath();
+        this._ctx.arc(varCoordinate, -constCoordinate - this._ctx.lineWidth * 1.5, radius, 0, endAngle, true);
+        this._ctx.fill();
+        this._ctx.closePath();
+
+        // Вертикальный ряд точек от верхнего левого угла
+        this._ctx.beginPath();
+        this._ctx.arc(constCoordinate, varCoordinate, radius, 0, endAngle, true);
+        this._ctx.fill();
+        this._ctx.closePath();
+
+        // Вертикальный ряд точек от верхнего правого угла
+        this._ctx.beginPath();
+        this._ctx.arc(-constCoordinate - this._ctx.lineWidth * 1.5, varCoordinate, radius, 0, endAngle, true);
+        this._ctx.fill();
+        this._ctx.closePath();
+      }
 
       // Отрисовка прямоугольника, обозначающего область изображения после
       // кадрирования. Координаты задаются от центра.
