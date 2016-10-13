@@ -185,9 +185,9 @@
     uploadForm.classList.remove('invisible');
   };
 
-  var resizeX = parseInt(document.querySelector('#resize-x').value, 10) || 0;
-  var resizeY = parseInt(document.querySelector('#resize-y').value, 10) || 0;
-  var resizeSize = parseInt(document.querySelector('#resize-size').value, 10) || 0;
+  var resizeX = document.querySelector('#resize-x');
+  var resizeY = document.querySelector('#resize-y');
+  var resizeSize = document.querySelector('#resize-size');
   var resizeFwd = document.querySelector('#resize-fwd');
 
   resizeX.value = 20;
@@ -196,8 +196,9 @@
 
   var resizeFormIsValid = function() {
     var isValid = false;
-    if (resizeX + resizeSize <= currentResizer._image.naturalWidth &&
-        resizeY + resizeSize <= currentResizer._image.naturalHeight) {
+
+    if ((parseInt(resizeX.value, 10) + parseInt(resizeSize.value, 10)) <= currentResizer._image.naturalWidth &&
+        (parseInt(resizeY.value, 10) + parseInt(resizeSize.value, 10)) <= currentResizer._image.naturalHeight) {
       isValid = true;
     }
     return isValid;
