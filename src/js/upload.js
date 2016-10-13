@@ -66,14 +66,14 @@
     var randomImageNumber = Math.round(Math.random() * (images.length - 1));
     backgroundElement.style.backgroundImage = 'url(' + images[randomImageNumber] + ')';
   };
-
   /**
    * Проверяет, валидны ли данные, в форме кадрирования.
    * @return {boolean}
    */
-  var resizeFormIsValid = function() {
+
+  /*var resizeFormIsValid = function() {
     return true;
-  };
+  };*/
 
   /**
    * Форма загрузки изображения.
@@ -183,6 +183,36 @@
 
     resizeForm.classList.add('invisible');
     uploadForm.classList.remove('invisible');
+  };
+
+  var resizeX = parseInt(document.querySelector('#resize-x').value, 10) || 0;
+  var resizeY = parseInt(document.querySelector('#resize-y').value, 10) || 0;
+  var resizeSize = parseInt(document.querySelector('#resize-size').value, 10) || 0;
+  var resizeFwd = document.querySelector('#resize-fwd');
+
+  resizeX.value = 20;
+  resizeY.value = 20;
+  resizeSize.value = 50;
+
+  var resizeFormIsValid = function() {
+    var isValid = false;
+    if (resizeX + resizeSize <= currentResizer._image.naturalWidth &&
+        resizeY + resizeSize <= currentResizer._image.naturalHeight) {
+      isValid = true;
+    }
+    return isValid;
+  };
+
+  resizeX.oninput = function() {
+    resizeFwd.disabled = !resizeFormIsValid();
+  };
+
+  resizeY.oninput = function() {
+    resizeFwd.disabled = !resizeFormIsValid();
+  };
+
+  resizeSize.oninput = function() {
+    resizeFwd.disabled = !resizeFormIsValid();
   };
 
   /**
