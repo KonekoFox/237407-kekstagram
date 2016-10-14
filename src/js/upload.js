@@ -160,6 +160,7 @@
           resizeForm.classList.remove('invisible');
 
           hideMessage();
+          resizeFwd.disabled = !resizeFormIsValid();
         };
 
         fileReader.readAsDataURL(element.files[0]);
