@@ -237,6 +237,13 @@
 
       resizeForm.classList.add('invisible');
       filterForm.classList.remove('invisible');
+
+      for (var index = 0; index < filterForm.length; index++) {
+        if (filterForm.elements[index].value === Cookies.get('upload-filter')) {
+          filterForm.elements[index].checked = true;
+        }
+      }
+
     }
   };
 
@@ -270,9 +277,9 @@
       var birthYear;
 
       if (thisMonth === 11 && thisDate > 9) {
-          birthYear = thisYear;
+        birthYear = thisYear;
       } else {
-          birthYear = thisYear - 1;
+        birthYear = thisYear - 1;
       }
 
       var GraceBirthday = new Date();
@@ -292,8 +299,6 @@
     filterForm.classList.add('invisible');
     uploadForm.classList.remove('invisible');
   };
-
-  alert(document.cookie);
 
   /**
    * Обработчик изменения фильтра. Добавляет класс из filterMap соответствующий
