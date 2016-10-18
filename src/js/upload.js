@@ -259,12 +259,41 @@
   filterForm.onsubmit = function(evt) {
     evt.preventDefault();
 
+    var cookieValue = document.querySelector('#upload-filter input[type="radio"]:checked').value;
+
+    var getExpireDate = function() {
+      var creationDate = new Date();
+      creationDate.setHours(0, 0, 0, 0);
+      var thisYear = creationDate.getFullYear();
+      var thisMonth = creationDate.getMonth();
+      var thisDate = creationDate.getDate();
+      var birthYear;
+
+      if (thisMonth === 11 && thisDate > 9) {
+          birthYear = thisYear;
+      } else {
+          birthYear = thisYear - 1;
+      }
+
+      var GraceBirthday = new Date();
+      GraceBirthday.setFullYear(birthYear);
+      GraceBirthday.setMonth(11, 9);
+      GraceBirthday.setHours(0, 0, 0, 0);
+
+      var expireDate = new Date(+creationDate + (creationDate - GraceBirthday));
+      return expireDate;
+    };
+
+    Cookies.set('upload-filter', cookieValue, { expires: getExpireDate() });
+
     cleanupResizer();
     updateBackground();
 
     filterForm.classList.add('invisible');
     uploadForm.classList.remove('invisible');
   };
+
+  alert(document.cookie);
 
   /**
    * Обработчик изменения фильтра. Добавляет класс из filterMap соответствующий
