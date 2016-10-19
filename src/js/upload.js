@@ -239,7 +239,7 @@
       filterForm.classList.remove('invisible');
 
       for (var index = 0; index < filterForm.length; index++) {
-        if (filterForm.elements[index].value === Cookies.get('upload-filter')) {
+        if (filterForm.elements[index].value === window.Cookies.get('upload-filter')) {
           filterForm.elements[index].checked = true;
         }
       }
@@ -291,7 +291,7 @@
       return expireDate;
     };
 
-    Cookies.set('upload-filter', cookieValue, { expires: getExpireDate() });
+    window.Cookies.set('upload-filter', cookieValue, { expires: getExpireDate() });
 
     cleanupResizer();
     updateBackground();
