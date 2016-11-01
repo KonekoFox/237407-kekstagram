@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function(picture) {
+var getPictureElement = function(picture) {
   var template = document.querySelector('#picture-template');
   var templateContainer = 'content' in template ? template.content : template;
   var pictureElement = templateContainer.querySelector('.picture').cloneNode(true);
@@ -22,3 +22,5 @@ module.exports = function(picture) {
 
   return pictureElement;
 };
+
+module.exports = getPictureElement;

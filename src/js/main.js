@@ -1,6 +1,5 @@
 'use strict';
 
-(function() {
-  var showPictures = require('./pictures');
-  showPictures();
-})();
+require('./resizer');
+require('./upload');
+require('./pictures');

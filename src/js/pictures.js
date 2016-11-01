@@ -1,12 +1,13 @@
 'use strict';
 
-module.exports = function() {
-  var load = require('./load');
-  var getPictureElement = require('./picture');
+var load = require('./load');
+var getPictureElement = require('./picture');
 
-  var PICTURES_LOAD_URL = 'http://localhost:1507/api/pictures';
-  var filters = document.querySelector('.filters');
-  var container = document.querySelector('.pictures');
+var PICTURES_LOAD_URL = 'http://localhost:1507/api/pictures';
+var filters = document.querySelector('.filters');
+var container = document.querySelector('.pictures');
+
+var showPictures = (function() {
 
   filters.classList.add('hidden');
 
@@ -19,4 +20,6 @@ module.exports = function() {
   load(PICTURES_LOAD_URL, showPictures, 'loadPictures');
 
   filters.classList.remove('hidden');
-};
+})();
+
+module.exports = showPictures;
