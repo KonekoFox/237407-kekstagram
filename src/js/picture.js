@@ -1,6 +1,6 @@
 'use strict';
 
-var getPictureElement = function(picture) {
+var getPictureElement = function(picture, index, pictures) {
   var template = document.querySelector('#picture-template');
   var templateContainer = 'content' in template ? template.content : template;
   var pictureElement = templateContainer.querySelector('.picture').cloneNode(true);

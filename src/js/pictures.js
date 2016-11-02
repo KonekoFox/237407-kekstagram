@@ -13,8 +13,8 @@ var showPictures = (function() {
   filters.classList.add('hidden');
 
   var showPics = function(pictures) {
-    pictures.forEach(function(picture) {
-      container.appendChild(getPictureElement(picture));
+    pictures.forEach(function(picture, index, pictures) {
+      container.appendChild(getPictureElement(picture, index, pictures));
     });
   };
 
