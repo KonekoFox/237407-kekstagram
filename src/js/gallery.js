@@ -1,6 +1,6 @@
 'use strict';
 
-var Gallery = function(elem, index, data) {
+var Gallery = function() {
   this.pictures = [];
   this.activePicture = 0;
 
@@ -8,48 +8,44 @@ var Gallery = function(elem, index, data) {
   this.galleryOverlayClose = document.querySelector('.gallery-overlay-close');
   this.galleryOverlayImage = document.querySelector('.gallery-overlay-image');
   this.element = document.querySelector('.picture');
-  var self = this;
-
-  this.element.onclick = function(evt) {
-    if (evt.target.classList.contains('picture')) {
-      evt.preventDefault();
-      openGallery(self.pictures);
-    }
-  };
-
-  this.remove = function() {
-    this.element.removeEventListener('click', this.onBackgroundClick);
-  };
 };
 
-Gallery.prototype.openGallery = function(elem, index, data) {
-  self.setPictures = function(data) {
-    self.pictures = data;
-  };
+Gallery.prototype = {
 
-  self.show = function(index) {
-    self.galleryOverlayClose.onclick = function() {
+  setPictures: function(data) {
+    this.pictures = data;
+  },
+
+  show: function(index) {
+    var self = this;
+
+    this.galleryOverlayClose.onclick = function() {
       self.hide();
     };
-    self.galleryOverlayImage.onclick = function() {
-      self.setActivePicture(index + 1 || this.activePicture);
+
+    this.galleryOverlayImage.onclick = function() {
+      (self.pictures.indexOf(self.pictures[++index]) !== -1) ? index = index : index = 0;
+      self.setActivePicture(index);
     };
-    self.galleryOverlay.classList.remove('invisible');
-    self.setActivePicture(index);
-  };
 
-  self.hide = function() {
-    self.galleryOverlay.classList.add('invisible');
-    self.galleryOverlayClose.onclick = null;
-    self.galleryOverlayImage.onclick = null;
-  };
+    this.galleryOverlay.classList.remove('invisible');
+    this.setActivePicture(index);
+  },
 
-  self.setActivePicture = function(index) {
-    self.activePicture = index;
-    self.galleryOverlayImage.src = self.pictures[self.activePicture].url;
-    self.galleryOverlay.querySelector('.likes-count').textContent = self.pictures[self.activePicture].likes;
-    self.galleryOverlay.querySelector('.comments-count').textContent = self.pictures[self.activePicture].comments;
-  };
+  hide: function() {
+    this.galleryOverlay.classList.add('invisible');
+    this.galleryOverlayClose.onclick = null;
+    this.galleryOverlayImage.onclick = null;
+  },
+
+  setActivePicture: function(index) {
+    var self = this;
+
+    this.activePicture = index;
+    this.galleryOverlayImage.src = self.pictures[self.activePicture].url;
+    this.galleryOverlay.querySelector('.likes-count').textContent = self.pictures[self.activePicture].likes;
+    this.galleryOverlay.querySelector('.comments-count').textContent = self.pictures[self.activePicture].comments;
+  }
 };
 
-module.exports = Gallery();
+module.exports = new Gallery();
