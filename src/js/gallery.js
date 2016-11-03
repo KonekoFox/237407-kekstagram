@@ -24,8 +24,11 @@ Gallery.prototype = {
     };
 
     this.galleryOverlayImage.onclick = function() {
-      (self.pictures.indexOf(self.pictures[++index]) !== -1) ? index = index : index = 0;
-      self.setActivePicture(index);
+      if (self.pictures.indexOf(self.pictures[++index]) !== -1) {
+        self.setActivePicture(index);
+      } else {
+        self.setActivePicture(index = 0);
+      }
     };
 
     this.galleryOverlay.classList.remove('invisible');
