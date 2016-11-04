@@ -7,7 +7,6 @@ var Gallery = function() {
   this.galleryOverlay = document.querySelector('.gallery-overlay');
   this.galleryOverlayClose = document.querySelector('.gallery-overlay-close');
   this.galleryOverlayImage = document.querySelector('.gallery-overlay-image');
-  this.element = document.querySelector('.picture');
 };
 
 Gallery.prototype = {
