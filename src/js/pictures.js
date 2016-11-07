@@ -2,12 +2,11 @@
 
 var Gallery = require('./gallery');
 var load = require('./load');
-var getPictureElement = require('./picture');
+var Picture = require('./picture');
 
 var PICTURES_LOAD_URL = 'http://localhost:1507/api/pictures';
 var filters = document.querySelector('.filters');
 var container = document.querySelector('.pictures');
-filters.classList.add('hidden');
 
 var showPictures = (function() {
 
@@ -15,15 +14,7 @@ var showPictures = (function() {
 
   var showPics = function(pictures) {
     pictures.forEach(function(picture, index) {
-      var currentElement = getPictureElement(picture);
-
-      container.appendChild(currentElement);
-
-      currentElement.onclick = function(evt) {
-        evt.preventDefault();
-
-        Gallery.show(index);
-      };
+      container.appendChild(new Picture(picture, index).element);
     });
 
     Gallery.setPictures(pictures);
