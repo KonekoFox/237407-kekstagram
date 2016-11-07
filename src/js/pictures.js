@@ -7,7 +7,6 @@ var Picture = require('./picture');
 var PICTURES_LOAD_URL = 'http://localhost:1507/api/pictures';
 var filters = document.querySelector('.filters');
 var container = document.querySelector('.pictures');
-filters.classList.add('hidden');
 
 var showPictures = (function() {
 
