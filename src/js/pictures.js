@@ -22,7 +22,7 @@ var showPictures = (function() {
   filters.classList.add('hidden');
 
   var showPics = function(pictures) {
-    pictures.forEach(function(picture, index, pictures) {
+    pictures.forEach(function(picture, index) {
       container.appendChild(new Picture(picture, index).element);
       arrayPictures = arrayPictures.concat(picture);
     });
@@ -39,10 +39,10 @@ var showPictures = (function() {
 
   var loadPictures = function(filter, page) {
     load(PICTURES_LOAD_URL, {
-         from: page * PAGE_SIZE,
-         to: page * PAGE_SIZE + PAGE_SIZE,
-         filter: filter },
-         showPics);
+      from: page * PAGE_SIZE,
+      to: page * PAGE_SIZE + PAGE_SIZE,
+      filter: filter },
+      showPics);
   };
 
   loadPictures(activeFilter, pageNumber);

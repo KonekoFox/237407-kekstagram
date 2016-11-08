@@ -1,7 +1,7 @@
 'use strict';
 
 var load = function(url, params, callback) {
-  var getSearchString = function(params) {
+  var getSearchString = function() {
     return Object.keys(params).map(function(param) {
       return [param, params[param]].join('=');
     }).join('&');
