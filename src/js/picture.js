@@ -14,7 +14,7 @@ var Picture = function(picture, index) {
 
 Picture.prototype = {
   remove: function() {
-    this.element.onclick = null;
+    element.onclick = null;
   },
 
   getPictureElement: function(picture) {
