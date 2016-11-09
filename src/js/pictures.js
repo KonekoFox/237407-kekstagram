@@ -14,38 +14,37 @@ var activeFilter = DEFAULT_FILTER;
 var PAGE_SIZE = 12;
 var GAP = 100;
 var pageNumber = 0;
-var lastPicture;
-var arrayPictures = [];
 
 var showPictures = (function() {
 
   filters.classList.add('hidden');
 
   var showPics = function(pictures) {
+    Gallery.setPictures(pictures);
+
+    container.innerHTML = '';
+
     pictures.forEach(function(picture, index) {
       container.appendChild(new Picture(picture, index).element);
-      arrayPictures = arrayPictures.concat(picture);
     });
+  };
 
-    lastPicture = document.querySelector('.picture:last-child');
-
-    while (container.getBoundingClientRect().right - lastPicture.getBoundingClientRect().right > 30 && pageNumber < 2) {
+  var addPictures = function() {
+    if (container.getBoundingClientRect().height - 120 < window.innerHeight - footer.getBoundingClientRect().height) {
       loadPictures(activeFilter, ++pageNumber);
     }
-
-    Gallery.setPictures(arrayPictures);
-
   };
 
   var loadPictures = function(filter, page) {
     load(PICTURES_LOAD_URL, {
-      from: page * PAGE_SIZE,
+      from: 0,
       to: page * PAGE_SIZE + PAGE_SIZE,
       filter: filter },
       showPics);
   };
 
   loadPictures(activeFilter, pageNumber);
+  addPictures();
 
   filters.classList.remove('hidden');
 
@@ -56,21 +55,25 @@ var showPictures = (function() {
   });
 
   var changeFilter = function(filterID) {
-    var elements = document.querySelectorAll('.picture');
-    elements.forEach.call(elements, function(elem) {
-      elem.onclick = null;
-    });
-
     container.innerHTML = '';
-    arrayPictures = [];
     activeFilter = filterID;
     pageNumber = 0;
     loadPictures(filterID, pageNumber);
+    addPictures();
   };
 
+  var THROTTLE_DELAY = 100;
+  var lastCall = Date.now();
+
+
   window.addEventListener('scroll', function() {
-    if (footer.getBoundingClientRect().bottom - window.innerHeight <= GAP) {
-      loadPictures(activeFilter, ++pageNumber);
+    if (Date.now() - lastCall >= THROTTLE_DELAY) {
+      if (footer.getBoundingClientRect().bottom - window.innerHeight <= GAP) {
+        loadPictures(activeFilter, ++pageNumber);
+        addPictures();
+      }
+
+      lastCall = Date.now();
     }
   });
 
