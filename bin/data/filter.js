@@ -7,6 +7,7 @@ module.exports = function(list, filterID) {
     return list.sort(function(a, b) {
       return b.likes - a.likes;
     });
+    break;
 
     case 'filter-new':
     list = list.filter(function(item) {
@@ -15,11 +16,13 @@ module.exports = function(list, filterID) {
         return b.created - a.created;
       });
     return list;
+    break;
 
     case 'filter-discussed':
     return list.sort(function(a, b) {
       return b.comments - a.comments;
     });
+    break;
   }
 
   return list;
