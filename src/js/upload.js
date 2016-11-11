@@ -173,7 +173,7 @@ var upload = (function() {
 
   var event = new CustomEvent('resizerchange');
 
-  window.addEventListener('resizerchange', function(event) {
+  window.addEventListener('resizerchange', function() {
     if (document.querySelector('canvas')) {
       resizeX.value = currentResizer.getConstraint().x;
       resizeY.value = currentResizer.getConstraint().y;
