@@ -175,9 +175,9 @@ var upload = (function() {
 
   window.addEventListener('resizerchange', function() {
     if (document.querySelector('canvas')) {
-      resizeX.value = currentResizer.getConstraint().x;
-      resizeY.value = currentResizer.getConstraint().y;
-      resizeSize.value = currentResizer.getConstraint().side;
+      resizeX.value = Math.round(currentResizer.getConstraint().x);
+      resizeY.value = Math.round(currentResizer.getConstraint().y);
+      resizeSize.value = Math.round(currentResizer.getConstraint().side);
     }
   });
 
