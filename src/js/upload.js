@@ -171,7 +171,9 @@ var upload = (function() {
     }
   }, false);
 
-  var event = new CustomEvent('resizerchange');
+  var event = document.createEvent('Event');
+
+  event.initEvent('resizerchange', true, true);
 
   window.addEventListener('resizerchange', function() {
     if (document.querySelector('canvas')) {
@@ -179,7 +181,7 @@ var upload = (function() {
       resizeY.value = Math.round(currentResizer.getConstraint().y);
       resizeSize.value = Math.round(currentResizer.getConstraint().side);
     }
-  });
+  }, false);
 
   window.dispatchEvent(event);
 

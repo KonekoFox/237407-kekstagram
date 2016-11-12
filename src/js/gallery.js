@@ -12,7 +12,11 @@ var Gallery = function() {
 Gallery.prototype = {
 
   setPictures: function(data) {
-    this.pictures = data;
+    this.pictures = this.pictures.concat(data);
+  },
+
+  removePictures: function() {
+    this.pictures = [];
   },
 
   show: function(index) {
