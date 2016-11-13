@@ -20,31 +20,28 @@ var showPictures = (function() {
   filters.classList.add('hidden');
 
   var showPics = function(pictures) {
-    Gallery.setPictures(pictures);
+    if (pictures.length > 0) {
+      Gallery.setPictures(pictures);
 
-    container.innerHTML = '';
+      pictures.forEach(function(picture, index) {
+        container.appendChild(new Picture(picture, index + pageNumber * PAGE_SIZE).element);
+      });
 
-    pictures.forEach(function(picture, index) {
-      container.appendChild(new Picture(picture, index).element);
-    });
-  };
-
-  var addPictures = function() {
-    if (container.getBoundingClientRect().height - 120 < window.innerHeight - footer.getBoundingClientRect().height) {
-      loadPictures(activeFilter, ++pageNumber);
+      if (container.getBoundingClientRect().height - 120 < window.innerHeight - footer.getBoundingClientRect().height) {
+        loadPictures(activeFilter, ++pageNumber);
+      }
     }
   };
 
   var loadPictures = function(filter, page) {
     load(PICTURES_LOAD_URL, {
-      from: 0,
+      from: page * PAGE_SIZE,
       to: page * PAGE_SIZE + PAGE_SIZE,
       filter: filter },
       showPics);
   };
 
   loadPictures(activeFilter, pageNumber);
-  addPictures();
 
   filters.classList.remove('hidden');
 
@@ -56,10 +53,10 @@ var showPictures = (function() {
 
   var changeFilter = function(filterID) {
     container.innerHTML = '';
+    Gallery.removePictures();
     activeFilter = filterID;
     pageNumber = 0;
     loadPictures(filterID, pageNumber);
-    addPictures();
   };
 
   var THROTTLE_DELAY = 100;
@@ -70,7 +67,6 @@ var showPictures = (function() {
     if (Date.now() - lastCall >= THROTTLE_DELAY) {
       if (footer.getBoundingClientRect().bottom - window.innerHeight <= GAP) {
         loadPictures(activeFilter, ++pageNumber);
-        addPictures();
       }
 
       lastCall = Date.now();
