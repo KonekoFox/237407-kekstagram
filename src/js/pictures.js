@@ -6,11 +6,14 @@ var Picture = require('./picture');
 
 var PICTURES_LOAD_URL = '/api/pictures';
 
-var filters = document.querySelector('.filters');
 var container = document.querySelector('.pictures');
 var footer = document.querySelector('.footer');
-var DEFAULT_FILTER = 'filter-popular';
+
+var filters = document.querySelector('.filters');
+var DEFAULT_FILTER = localStorage.getItem('filter') || 'filter-popular';
 var activeFilter = DEFAULT_FILTER;
+filters.querySelector('#' + activeFilter).checked = true;
+
 var PAGE_SIZE = 12;
 var GAP = 100;
 var pageNumber = 0;
@@ -55,6 +58,7 @@ var showPictures = (function() {
     container.innerHTML = '';
     Gallery.removePictures();
     activeFilter = filterID;
+    localStorage.setItem('filter', filterID);
     pageNumber = 0;
     loadPictures(filterID, pageNumber);
   };

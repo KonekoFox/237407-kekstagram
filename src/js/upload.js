@@ -261,6 +261,7 @@ var upload = (function() {
       for (var index = 0; index < filterForm.length; index++) {
         if (filterForm.elements[index].value === window.Cookies.get('upload-filter')) {
           filterForm.elements[index].checked = true;
+          filterImage.className = 'filter-image-preview ' + 'filter-' + window.Cookies.get('upload-filter');
         }
       }
 
