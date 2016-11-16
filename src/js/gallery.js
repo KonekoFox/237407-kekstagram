@@ -20,19 +20,18 @@ Gallery.prototype = {
   },
 
   show: function(index) {
-    var self = this;
 
     this.galleryOverlayClose.onclick = function() {
-      self.hide();
-    };
+      this.hide();
+    }.bind(this);
 
     this.galleryOverlayImage.onclick = function() {
-      if (self.pictures.indexOf(self.pictures[++index]) !== -1) {
-        self.setActivePicture(index);
+      if (this.pictures.indexOf(this.pictures[++index]) !== -1) {
+        this.setActivePicture(index);
       } else {
-        self.setActivePicture(index = 0);
+        this.setActivePicture(index = 0);
       }
-    };
+    }.bind(this);
 
     this.galleryOverlay.classList.remove('invisible');
     this.setActivePicture(index);
@@ -45,12 +44,10 @@ Gallery.prototype = {
   },
 
   setActivePicture: function(index) {
-    var self = this;
-
     this.activePicture = index;
-    this.galleryOverlayImage.src = self.pictures[self.activePicture].url;
-    this.galleryOverlay.querySelector('.likes-count').textContent = self.pictures[self.activePicture].likes;
-    this.galleryOverlay.querySelector('.comments-count').textContent = self.pictures[self.activePicture].comments;
+    this.galleryOverlayImage.src = this.pictures[this.activePicture].url;
+    this.galleryOverlay.querySelector('.likes-count').textContent = this.pictures[this.activePicture].likes;
+    this.galleryOverlay.querySelector('.comments-count').textContent = this.pictures[this.activePicture].comments;
   }
 };
 
