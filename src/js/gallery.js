@@ -29,7 +29,8 @@ Gallery.prototype = {
       if (this.pictures.indexOf(this.pictures[++index]) !== -1) {
         this.setActivePicture(index);
       } else {
-        this.setActivePicture(index = 0);
+        index = 0;
+        this.setActivePicture(index);
       }
     }.bind(this);
 
