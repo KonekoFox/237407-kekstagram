@@ -4,15 +4,20 @@ var Gallery = require('./gallery');
 
 var Picture = function(picture, index) {
   this.data = picture;
+  this.index = index;
   this.element = this.getPictureElement(this.data);
 
-  this.element.onclick = function(evt) {
-    evt.preventDefault();
-    Gallery.show(index);
-  };
+  this.onClick = this.onClick.bind(this);
+  this.element.addEventListener('click', this.onClick);
 };
 
 Picture.prototype = {
+
+  onClick: function(evt) {
+    evt.preventDefault();
+    Gallery.show(this.index);
+  },
+
   remove: function() {
     this.element.onclick = null;
   },
