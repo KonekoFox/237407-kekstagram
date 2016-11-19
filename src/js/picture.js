@@ -1,7 +1,5 @@
 'use strict';
 
-var Gallery = require('./gallery');
-
 var Picture = function(picture, index) {
   this.data = picture;
   this.index = index;
@@ -15,7 +13,7 @@ Picture.prototype = {
 
   onClick: function(evt) {
     evt.preventDefault();
-    Gallery.show(this.index);
+    location.hash = 'photo/' + this.data.url;
   },
 
   remove: function() {

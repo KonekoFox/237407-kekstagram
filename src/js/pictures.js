@@ -33,6 +33,8 @@ var showPictures = (function() {
       if (container.getBoundingClientRect().height - 120 < window.innerHeight - footer.getBoundingClientRect().height) {
         loadPictures(activeFilter, ++pageNumber);
       }
+
+      restoreFromHash();
     }
   };
 
@@ -66,7 +68,6 @@ var showPictures = (function() {
   var THROTTLE_DELAY = 100;
   var lastCall = Date.now();
 
-
   window.addEventListener('scroll', function() {
     if (Date.now() - lastCall >= THROTTLE_DELAY) {
       if (footer.getBoundingClientRect().bottom - window.innerHeight <= GAP) {
@@ -76,6 +77,18 @@ var showPictures = (function() {
       lastCall = Date.now();
     }
   });
+
+  var regexp = /#photo\/(\S+)/;
+
+  var restoreFromHash = function() {
+    if (location.hash.match(regexp)) {
+      Gallery.show(location.hash.match(regexp)[1]);
+    } else {
+      Gallery.close();
+    }
+  };
+
+  window.addEventListener('hashchange', restoreFromHash, false);
 
 })();
 

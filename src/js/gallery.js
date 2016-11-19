@@ -2,7 +2,7 @@
 
 var Gallery = function() {
   this.pictures = [];
-  this.activePicture = 0;
+  this.activePicture = null;
 
   this.galleryOverlay = document.querySelector('.gallery-overlay');
   this.galleryOverlayClose = document.querySelector('.gallery-overlay-close');
@@ -19,36 +19,49 @@ Gallery.prototype = {
     this.pictures = [];
   },
 
-  show: function(index) {
+  show: function(url) {
 
     this.galleryOverlayClose.onclick = function() {
       this.hide();
     }.bind(this);
 
     this.galleryOverlayImage.onclick = function() {
-      if (this.pictures.indexOf(this.pictures[++index]) !== -1) {
-        this.setActivePicture(index);
+      if (this.pictures.indexOf(this.pictures[++this.activePicture]) !== -1) {
+        location.hash = 'photo/' + this.pictures[this.activePicture].url;
       } else {
-        index = 0;
-        this.setActivePicture(index);
+        this.activePicture = 0;
+        location.hash = 'photo/' + this.pictures[this.activePicture].url;
       }
     }.bind(this);
 
     this.galleryOverlay.classList.remove('invisible');
-    this.setActivePicture(index);
+    this.setActivePicture(url);
   },
 
   hide: function() {
+    location.hash = '';
+  },
+
+  close: function() {
     this.galleryOverlay.classList.add('invisible');
     this.galleryOverlayClose.onclick = null;
     this.galleryOverlayImage.onclick = null;
+    this.activePicture = null;
   },
 
-  setActivePicture: function(index) {
-    this.activePicture = index;
-    this.galleryOverlayImage.src = this.pictures[this.activePicture].url;
-    this.galleryOverlay.querySelector('.likes-count').textContent = this.pictures[this.activePicture].likes;
-    this.galleryOverlay.querySelector('.comments-count').textContent = this.pictures[this.activePicture].comments;
+  setActivePicture: function(url) {
+    for (this.activePicture = 0; this.activePicture < this.pictures.length; this.activePicture++) {
+      if (this.pictures[this.activePicture].url === url) {
+        this.galleryOverlayImage.src = url;
+        this.galleryOverlay.querySelector('.likes-count').textContent = this.pictures[this.activePicture].likes;
+        this.galleryOverlay.querySelector('.comments-count').textContent = this.pictures[this.activePicture].comments;
+        break;
+      } else {
+        this.galleryOverlayImage.src = url;
+        this.galleryOverlay.querySelector('.likes-count').textContent = null;
+        this.galleryOverlay.querySelector('.comments-count').textContent = null;
+      }
+    }
   }
 };
 
