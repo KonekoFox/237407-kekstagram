@@ -1,23 +1,29 @@
 'use strict';
 
-var Picture = function(picture, index) {
+var BaseComponent = require('./base-component');
+var utils = require('./utils');
+
+var Picture = function(picture) {
   this.data = picture;
-  this.index = index;
   this.element = this.getPictureElement(this.data);
+
+  BaseComponent.call(this, this.element);
 
   this.onClick = this.onClick.bind(this);
   this.element.addEventListener('click', this.onClick);
 };
 
+utils.inherit(Picture, BaseComponent);
+
 Picture.prototype = {
 
   onClick: function(evt) {
-    evt.preventDefault();
+    BaseComponent.prototype.onClick.call(this, evt);
     location.hash = 'photo/' + this.data.url;
   },
 
   remove: function() {
-    this.element.onclick = null;
+    BaseComponent.prototype.removeListener.call(this);
   },
 
   getPictureElement: function(picture) {
